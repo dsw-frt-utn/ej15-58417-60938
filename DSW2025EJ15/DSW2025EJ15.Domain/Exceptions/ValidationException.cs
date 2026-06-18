@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dsw2026Ej15.Domain.Exceptions
+namespace DSW2025EJ15.Domain.Exceptions
 {
     public class ValidationException : Exception
     {

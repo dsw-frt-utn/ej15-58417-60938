@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DSW2025EJ15.Domain\DSW2025EJ15.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

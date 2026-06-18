@@ -1,23 +1,23 @@
 ﻿using System;
 
-namespace Dsw2026Ej15.Domain.Entities
+namespace DSW2025EJ15.Domain.Entities
 {
     public class Doctor : BaseEntity
     {
         private string _name;
         private string _licenseNumber;
         private bool _isActive;
-        private Specialty _specialty;
+        private Speciality _specialty;
 
         public Doctor()
         {
             _name = string.Empty;
             _licenseNumber = string.Empty;
             _isActive = true;
-            _specialty = new Specialty();
+            _specialty = new Speciality();
         }
 
-        public Doctor(string name, string licenseNumber, bool isActive, Specialty specialty)
+        public Doctor(string name, string licenseNumber, bool isActive, Speciality specialty)
         {
             _name = name;
             _licenseNumber = licenseNumber;
@@ -25,7 +25,7 @@ namespace Dsw2026Ej15.Domain.Entities
             _specialty = specialty;
         }
 
-        public Doctor(Guid id, string name, string licenseNumber, bool isActive, Specialty specialty) : base(id)
+        public Doctor(Guid id, string name, string licenseNumber, bool isActive, Speciality specialty) : base(id)
         {
             _name = name;
             _licenseNumber = licenseNumber;
@@ -63,7 +63,7 @@ namespace Dsw2026Ej15.Domain.Entities
             }
         }
 
-        public Specialty Specialty
+        public Speciality Specialty
         {
             get { 
                 return _specialty; 

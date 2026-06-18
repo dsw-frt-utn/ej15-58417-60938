@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DSW2025EJ15.Data\DSW2025EJ15.Data.csproj" />
+    <ProjectReference Include="..\DSW2025EJ15.Domain\DSW2025EJ15.Domain.csproj" />
   </ItemGroup>
 
 </Project>

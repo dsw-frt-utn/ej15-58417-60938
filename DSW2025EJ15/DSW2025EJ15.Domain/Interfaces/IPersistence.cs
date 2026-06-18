@@ -1,6 +1,6 @@
-﻿using Dsw2026Ej15.Domain.Entities;
+﻿using DSW2025EJ15.Domain.Entities;
 
-namespace Dsw2026Ej15.Domain.Interfaces
+namespace DSW2025EJ15.Domain.Interfaces 
 {
     public interface IPersistence
     {
@@ -12,6 +12,6 @@ namespace Dsw2026Ej15.Domain.Interfaces
 
         bool DeactivateDoctor(Guid id);
 
-        Specialty? GetSpecialtyById(Guid id);
+        Speciality? GetSpecialtyById(Guid id);
     }
 }

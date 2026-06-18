@@ -1,5 +1,5 @@
 <Solution>
+  <Project Path="DSW2025EJ15.Api/DSW2025EJ15.Api.csproj" />
   <Project Path="DSW2025EJ15.Data/DSW2025EJ15.Data.csproj" />
   <Project Path="DSW2025EJ15.Domain/DSW2025EJ15.Domain.csproj" />
-  <Project Path="DSW2025EJ15/DSW2025EJ15.Api.csproj" />
 </Solution>

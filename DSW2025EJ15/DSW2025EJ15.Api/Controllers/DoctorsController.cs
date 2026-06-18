@@ -1,8 +1,8 @@
-using Dsw2026Ej15.Api.Models;
-using Dsw2026Ej15.Domain.Entities;
-using Dsw2026Ej15.Domain.Interfaces;
+using DSW2025EJ15.Api.Models;
+using DSW2025EJ15.Domain.Entities;
+using DSW2025EJ15.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Dsw2026Ej15.Domain.Exceptions;
+using DSW2025EJ15.Domain.Exceptions; 
 
 namespace Dsw2026Ej15.Api.Controllers
 {
@@ -30,9 +30,9 @@ namespace Dsw2026Ej15.Api.Controllers
                 throw new ValidationException("LicenseNumber es requerido.");
             }
 
-            Specialty? specialty = _persistence.GetSpecialtyById(doctor.SpecialtyId);
+            Speciality? speciality = _persistence.GetSpecialtyById(doctor.SpecialtyId);
 
-            if (specialty == null)
+            if (speciality == null) 
             {
                 throw new ValidationException("SpecialtyId debe existir.");
             }
@@ -41,7 +41,7 @@ namespace Dsw2026Ej15.Api.Controllers
                 doctor.Name,
                 doctor.LicenseNumber,
                 true,
-                specialty
+                speciality
             );
 
             _persistence.AddDoctor(newDoctor);

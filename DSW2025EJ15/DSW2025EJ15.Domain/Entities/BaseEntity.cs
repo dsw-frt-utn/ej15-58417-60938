@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dsw2026Ej15.Domain.Entities
+namespace DSW2025EJ15.Domain.Entities
 {
     public abstract class BaseEntity
     {
