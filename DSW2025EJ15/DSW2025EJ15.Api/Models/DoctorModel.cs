@@ -1,7 +1,18 @@
-namespace Dsw2026Eje15.Api.Models;
-
-public record DoctorModel()
+namespace Dsw2026Ej15.Api.Models
 {
-    public record request(string name, string LicenseNumber, Guid SpecialityId); //estructura request
-    // es por convencion, ya que se utiliza para devolver datos con una estructura y otra para pedir datos 
+    public class DoctorModel
+    {
+        public record Request(
+            string Name,
+            string LicenseNumber,
+            Guid SpecialtyId
+        );
+
+        public record Response(
+            Guid Id,
+            string Name,
+            string LicenseNumber,
+            string SpecialtyName
+        );
+    }
 }

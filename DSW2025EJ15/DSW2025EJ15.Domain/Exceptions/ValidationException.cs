@@ -1,8 +1,11 @@
 ﻿using System;
 
-public class Class1
+namespace Dsw2026Ej15.Domain.Exceptions
 {
-	public Class1()
-	{
-	}
+    public class ValidationException : Exception
+    {
+        public ValidationException(string message) : base(message)
+        {
+        }
+    }
 }

@@ -1,45 +1,114 @@
-using Dsw2026Eje15.Api.Models;
-
+using Dsw2026Ej15.Api.Models;
+using Dsw2026Ej15.Domain.Entities;
+using Dsw2026Ej15.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Dsw2026Ej15.Domain.Exceptions;
 
-namespace Dsw2026Eje15.Api.Controllers
+namespace Dsw2026Ej15.Api.Controllers
 {
     [ApiController]
-    [Route("api/doctors")] //establece uri del controlador
+    [Route("api/doctors")]
     public class DoctorsController : ControllerBase
     {
-        private readonly IPersistence _persistence; 
-        
-        public DoctorsController( IPersitence persistence)
+        private readonly IPersistence _persistence;
+
+        public DoctorsController(IPersistence persistence)
         {
             _persistence = persistence;
         }
 
-        [HttpPost] //indica que la funcion de abajo es Post
-        public async Task<IActionResult> CreateDoctors(DoctorModel.request doctor)
+        [HttpPost]
+        public IActionResult CreateDoctor([FromBody] DoctorModel.Request doctor)
         {
-            //IActionResult es la interfaz estandar
-            //cuando queremos retornar mensajes de estados y asi transformarlos en codigos de estado
-
-            if( (string.IsNullOrWhiteSpace(doctor.name) || 
-                string.IsNullOrWhiteSpace(doctor.LicenseNumber))
+            if (string.IsNullOrWhiteSpace(doctor.Name))
             {
-                return BadRequest();  //devuelve error
+                throw new ValidationException("Name es requerido.");
             }
 
-            var speciality = _persistence.GetSpecialityById(doctor.SpecialityId); //verifica que el numero de especialidad este dentro del json
-            return Created();  //devuelve el codigo de estado 201
+            if (string.IsNullOrWhiteSpace(doctor.LicenseNumber))
+            {
+                throw new ValidationException("LicenseNumber es requerido.");
+            }
+
+            Specialty? specialty = _persistence.GetSpecialtyById(doctor.SpecialtyId);
+
+            if (specialty == null)
+            {
+                throw new ValidationException("SpecialtyId debe existir.");
+            }
+
+            Doctor newDoctor = new Doctor(
+                doctor.Name,
+                doctor.LicenseNumber,
+                true,
+                specialty
+            );
+
+            _persistence.AddDoctor(newDoctor);
+
+            DoctorModel.Response response = new DoctorModel.Response(
+                newDoctor.Id,
+                newDoctor.Name,
+                newDoctor.LicenseNumber,
+                newDoctor.Specialty.Name
+            );
+
+            return CreatedAtAction(
+                nameof(GetDoctorById),
+                new { id = newDoctor.Id },
+                response
+            );
         }
-        // cuando devolvemos un Ok, segun la interfaz ActionResult, se transforma en un 200
-        // el body indica las cosas que pide el request,seria lo que esta definidio en doctors model
-        
-        
-         
-        
-        
-        
-        
-        
-        //cada endpoint se corresponde a un metodo
+
+        [HttpGet]
+        public IActionResult GetDoctors()
+        {
+            List<DoctorModel.Response> doctors = _persistence
+                .GetActiveDoctors()
+                .Select(doctor => new DoctorModel.Response(
+                    doctor.Id,
+                    doctor.Name,
+                    doctor.LicenseNumber,
+                    doctor.Specialty.Name
+                ))
+                .ToList();
+
+            return Ok(doctors);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetDoctorById(Guid id)
+        {
+            Doctor? doctor = _persistence.GetActiveDoctorById(id);
+
+            if (doctor == null)
+            {
+                return NotFound("No se encontró el médico o no está activo.");
+            }
+
+            DoctorModel.Response response = new DoctorModel.Response(
+                doctor.Id,
+                doctor.Name,
+                doctor.LicenseNumber,
+                doctor.Specialty.Name
+            );
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteDoctor(Guid id)
+        {
+            Doctor? doctor = _persistence.GetActiveDoctorById(id);
+
+            if (doctor == null)
+            {
+                return NotFound("No se encontró el médico o no está activo.");
+            }
+
+            _persistence.DeactivateDoctor(id);
+
+            return NoContent();
+        }
     }
 }
