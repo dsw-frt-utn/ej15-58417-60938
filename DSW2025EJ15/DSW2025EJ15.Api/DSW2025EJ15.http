@@ -1,0 +1,6 @@
+@DSW2025EJ15_HostAddress = http://localhost:5036
+
+GET {{DSW2025EJ15_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

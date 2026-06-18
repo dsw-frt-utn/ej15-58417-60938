@@ -1,4 +1,5 @@
 using Dsw2026Eje15.Api.Models;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dsw2026Eje15.Api.Controllers
@@ -9,7 +10,7 @@ namespace Dsw2026Eje15.Api.Controllers
     {
         private readonly IPersistence _persistence; 
         
-        public DoctorsController(IPersitence persistence)
+        public DoctorsController( IPersitence persistence)
         {
             _persistence = persistence;
         }
