@@ -1,8 +1,29 @@
 ﻿using System;
 
-public class Class1
+namespace Dsw2026Ej15.Domain.Entities
 {
-	public Class1()
-	{
-	}
+    public abstract class BaseEntity
+    {
+        private Guid _id;
+
+        public BaseEntity()
+        {
+            _id = Guid.NewGuid();
+        }
+
+        public BaseEntity(Guid id)
+        {
+            _id = id;
+        }
+
+        public Guid Id
+        {
+            get { 
+                return _id; 
+            }
+            set { 
+                _id = value; 
+            }
+        }
+    }
 }
