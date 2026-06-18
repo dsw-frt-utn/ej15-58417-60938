@@ -4,19 +4,45 @@ using System.IO;
 using System.Text.Json;
 using DSW2025EJ15.Domain.Entities;
 using DSW2025EJ15.Data.Dtos;
+using DSW2025EJ15.Domain.Entities;
 using DSW2025EJ15.Domain.Interfaces;
 
 namespace DSW2025EJ15.Data.Sources;
 public class PersistenceInMemory :IPersistence 
 {
-    private List<Speciality> _specialities;
-    private List<Doctor> _doctors; 
+    private List<Speciality> _specialities = [];
+    private List<Doctor> _doctors = []; 
 
 
     public PersistenceInMemory() {
         LoadSpecialities();
     }
-    
+
+    public void AddDoctor(Doctor doctor)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool DeactivateDoctor(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Doctor? GetActiveDoctorById(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Doctor> GetActiveDoctors()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Speciality? GetSpecialtyById(Guid id)
+    {
+        return _specialities.SingleOrDefault(s => s.Id == id);
+    }
+
     public void LoadSpecialities()
     {
         try {
@@ -34,33 +60,10 @@ public class PersistenceInMemory :IPersistence
 
         catch (Exception e)
         {
-            
+            Console.WriteLine("Error al cargar");
         }
     }
 
 
-    public List<Doctor> GetActiveDoctors()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Doctor? GetActiveDoctorById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddDoctor(Doctor doctor)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool DeactivateDoctor(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Speciality? GetSpecialtyById(Guid id)
-    {
-        return _specialities.SingleOrDefault(s => s.Id == id);
-    }
+   
 }
