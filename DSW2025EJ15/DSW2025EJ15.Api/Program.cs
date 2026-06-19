@@ -24,45 +24,60 @@ public class Program
 
 
         var app = builder.Build();
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }   
         // Configure the HTTP request pipeline.
         //Middlewares
+        
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseAuthorization();
+        app.MapControllers();
+        
+        app.Use(async (context,next) =>
+        {
+            try
+            {
+                await next(context);
+            }
+            catch (Exception e)
+            {
+
+                if (e.GetType() != typeof(ValidationException))
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    await context.Response.WriteAsync("problem");
+                }
+                else
+                {
+                    await next(context);
+                }
+
+
+            }
+            
+
+        });
+        
         app.Use(async (context, next) =>
         {
             try
             {
-                await next(context); //sigue avanzando hasta llegar al controller
+                await next.Invoke(context); //sigue avanzando hasta llegar al controller
             }
             catch (ValidationException e)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest; //le da el numero de error al usuario
                 await context.Response.WriteAsync(e.Message); //le da mensaje al usuario
             }
-            catch (Exception e) // 👈 temporal, para diagnosticar
-            {
-                Console.WriteLine($"TIPO REAL: {e.GetType().FullName}");
-                Console.WriteLine($"MENSAJE: {e.Message}");
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsync(e.Message);
-            }
+            
         });
         
         
         
         
-        
-            app.UseAuthorization();
-
-
-            app.MapControllers();
-        
-        
-        app.Run(async context  =>
-        {
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            await context.Response.WriteAsync("problem");
-        });
 
         app.Run();
     }

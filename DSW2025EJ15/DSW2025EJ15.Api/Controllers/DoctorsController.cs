@@ -4,7 +4,7 @@ using DSW2025EJ15.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using DSW2025EJ15.Domain.Exceptions; 
 
-namespace Dsw2026Ej15.Api.Controllers
+namespace DSW2025EJ15.Api.Controllers
 {
     [ApiController]
     [Route("api/doctors")]

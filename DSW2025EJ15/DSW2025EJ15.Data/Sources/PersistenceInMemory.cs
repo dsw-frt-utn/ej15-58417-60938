@@ -20,22 +20,23 @@ public class PersistenceInMemory :IPersistence
 
     public void AddDoctor(Doctor doctor)
     {
-        throw new NotImplementedException();
+        
     }
 
     public bool DeactivateDoctor(Guid id)
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     public Doctor? GetActiveDoctorById(Guid id)
     {
-        throw new NotImplementedException();
+        
+        return _doctors.SingleOrDefault(s => s.Id == id);
     }
 
     public List<Doctor> GetActiveDoctors()
     {
-        throw new NotImplementedException();
+        return _doctors;
     }
 
     public Speciality? GetSpecialtyById(Guid id)
