@@ -1,10 +1,17 @@
+
 using DSW2025EJ15.Data.Sources;
 using DSW2025EJ15.Domain.Interfaces;
+using DSW2025EJ15.Domain.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
+using DSW2025EJ15.Domain.Exceptions;
+
 namespace DSW2025EJ15.Api;
 public class Program
 {
     public static void Main(string[] args)
     {
+        
+        
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
@@ -18,17 +25,44 @@ public class Program
 
         var app = builder.Build();
         app.UseSwagger();
-
         app.UseSwaggerUI();
         // Configure the HTTP request pipeline.
-
-        if (app.Environment.IsDevelopment())
+        //Middlewares
+        app.Use(async (context, next) =>
         {
+            try
+            {
+                await next(context); //sigue avanzando hasta llegar al controller
+            }
+            catch (ValidationException e)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest; //le da el numero de error al usuario
+                await context.Response.WriteAsync(e.Message); //le da mensaje al usuario
+            }
+            catch (Exception e) // 👈 temporal, para diagnosticar
+            {
+                Console.WriteLine($"TIPO REAL: {e.GetType().FullName}");
+                Console.WriteLine($"MENSAJE: {e.Message}");
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsync(e.Message);
+            }
+        });
+        
+        
+        
+        
+        
             app.UseAuthorization();
 
 
             app.MapControllers();
-        }
+        
+        
+        app.Run(async context  =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsync("problem");
+        });
 
         app.Run();
     }

@@ -19,31 +19,28 @@ namespace Dsw2026Ej15.Api.Controllers
 
         [HttpPost]
         public IActionResult CreateDoctor([FromBody] DoctorModel.Request doctor)
-        {
-            if (string.IsNullOrWhiteSpace(doctor.Name))
-            {
-                throw new ValidationException("Name es requerido.");
-            }
-
-            if (string.IsNullOrWhiteSpace(doctor.LicenseNumber))
-            {
-                throw new ValidationException("LicenseNumber es requerido.");
-            }
-
+        {   
             Speciality? speciality = _persistence.GetSpecialtyById(doctor.SpecialtyId);
-
-            if (speciality == null) 
-            {
-                throw new ValidationException("SpecialtyId debe existir.");
-            }
-
-            Doctor newDoctor = new Doctor(
-                doctor.Name,
-                doctor.LicenseNumber,
-                true,
-                speciality
-            );
-
+            
+                if (string.IsNullOrWhiteSpace(doctor.Name))
+                {
+                    throw new ValidationException("Name es requerido.");
+                
+                }
+                if (string.IsNullOrWhiteSpace(doctor.LicenseNumber))
+                {
+                    throw new ValidationException("LicenseNumber es requerido.");
+                
+                }
+            
+                if (speciality == null) 
+                {
+                    throw new ValidationException("SpecialtyId debe existir.");
+               
+                }
+            
+            
+            Doctor newDoctor = new Doctor(doctor.Name, doctor.LicenseNumber, true, speciality);
             _persistence.AddDoctor(newDoctor);
 
             DoctorModel.Response response = new DoctorModel.Response(
@@ -53,11 +50,8 @@ namespace Dsw2026Ej15.Api.Controllers
                 newDoctor.Specialty.Name
             );
 
-            return CreatedAtAction(
-                nameof(GetDoctorById),
-                new { id = newDoctor.Id },
-                response
-            );
+            return Created();
+            
         }
 
         [HttpGet]
@@ -80,11 +74,13 @@ namespace Dsw2026Ej15.Api.Controllers
         public IActionResult GetDoctorById(Guid id)
         {
             Doctor? doctor = _persistence.GetActiveDoctorById(id);
-
-            if (doctor == null)
-            {
-                return NotFound("No se encontró el médico o no está activo.");
-            }
+            
+                if (doctor == null)
+                {
+                    throw new ValidationException("Medico inexistente o inactivo");
+                }
+            
+            
 
             DoctorModel.Response response = new DoctorModel.Response(
                 doctor.Id,
@@ -100,12 +96,12 @@ namespace Dsw2026Ej15.Api.Controllers
         public IActionResult DeleteDoctor(Guid id)
         {
             Doctor? doctor = _persistence.GetActiveDoctorById(id);
-
-            if (doctor == null)
-            {
-                return NotFound("No se encontró el médico o no está activo.");
-            }
-
+            
+                if (doctor == null)
+                {
+                    throw new ValidationException("Doctor no encontrado o inactivo");
+                }
+                
             _persistence.DeactivateDoctor(id);
 
             return NoContent();
