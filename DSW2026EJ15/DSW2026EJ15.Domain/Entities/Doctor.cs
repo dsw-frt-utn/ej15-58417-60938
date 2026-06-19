@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DSW2025EJ15.Domain.Entities
+namespace DSW2026EJ15.Domain.Entities
 {
     public class Doctor : BaseEntity
     {

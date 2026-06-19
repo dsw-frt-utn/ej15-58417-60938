@@ -1,10 +1,10 @@
-using DSW2025EJ15.Api.Models;
-using DSW2025EJ15.Domain.Entities;
-using DSW2025EJ15.Domain.Interfaces;
+using DSW2026EJ15.Domain.Entities;
+using DSW2026EJ15.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using DSW2025EJ15.Domain.Exceptions; 
+using DSW2026EJ15.Domain.Exceptions;
+using DSW2026EJ15.Api.Models;
 
-namespace DSW2025EJ15.Api.Controllers
+namespace DSW2026EJ15.Api.Controllers
 {
     [ApiController]
     [Route("api/doctors")]

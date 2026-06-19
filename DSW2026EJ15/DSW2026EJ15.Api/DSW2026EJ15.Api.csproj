@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DSW2025EJ15.Data\DSW2025EJ15.Data.csproj" />
-    <ProjectReference Include="..\DSW2025EJ15.Domain\DSW2025EJ15.Domain.csproj" />
+    <ProjectReference Include="..\DSW2026EJ15.Data\DSW2026EJ15.Data.csproj" />
+    <ProjectReference Include="..\DSW2026EJ15.Domain\DSW2026EJ15.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace DSW2025EJ15.Api.Models
+namespace DSW2026EJ15.Api.Models
 {
     public class DoctorModel
     {

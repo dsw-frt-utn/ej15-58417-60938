@@ -1,7 +1,7 @@
 using System.Net;
-using DSW2025EJ15.Domain.Exceptions;
+using DSW2026EJ15.Domain.Exceptions;
 
-namespace DSW2025EJ15.Api.Middleware;
+namespace DSW2026EJ15.Api.Middleware;
 
 public class ExceptionMiddleware
 {
