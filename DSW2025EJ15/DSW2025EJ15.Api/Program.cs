@@ -1,4 +1,5 @@
 
+using DSW2025EJ15.Api.Middleware;
 using DSW2025EJ15.Data.Sources;
 using DSW2025EJ15.Domain.Interfaces;
 using DSW2025EJ15.Domain.Exceptions;
@@ -19,65 +20,30 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen();
         builder.Services.AddSingleton<IPersistence, PersistenceInMemory>();
-
+        builder.Services.AddHealthChecks();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
-
+        
+        
         var app = builder.Build();
+        app.UseSwagger();
+        app.UseSwaggerUI();
         if (app.Environment.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            app.UseAuthorization();
+            app.MapControllers();
         }   
         // Configure the HTTP request pipeline.
         //Middlewares
         
-        app.UseSwagger();
-        app.UseSwaggerUI();
-        app.UseAuthorization();
-        app.MapControllers();
-        
-        app.Use(async (context,next) =>
-        {
-            try
-            {
-                await next(context);
-            }
-            catch (Exception e)
-            {
-
-                if (e.GetType() != typeof(ValidationException))
-                {
-                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                    await context.Response.WriteAsync("problem");
-                }
-                else
-                {
-                    await next(context);
-                }
-
-
-            }
-            
-
-        });
-        
-        app.Use(async (context, next) =>
-        {
-            try
-            {
-                await next.Invoke(context); //sigue avanzando hasta llegar al controller
-            }
-            catch (ValidationException e)
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest; //le da el numero de error al usuario
-                await context.Response.WriteAsync(e.Message); //le da mensaje al usuario
-            }
-            
-        });
         
         
         
+        app.MapHealthChecks("/healt-check"); //le da una respuesta de funcionaminento, necesario para otra app
+        //si le no diese una respuesta, significa que el servidor no esta funcionando
+        //es para no tener que estar pasando por cada endpoint para ver si esta funcionando
         
+        app.UseMiddleware<ExceptionMiddleware>();  //registra middleware en la app
 
         app.Run();
     }

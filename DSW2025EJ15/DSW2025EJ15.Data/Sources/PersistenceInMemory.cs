@@ -51,10 +51,10 @@ public class PersistenceInMemory :IPersistence
         
         var pathJson = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "specialities.json");
         var strJson = File.ReadAllText(pathJson);
-            var specialities = JsonSerializer.Deserialize<List<SpecialityDTO>>(strJson, //deserializa json 
-            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }) ?? [];   //problemas con cammel case
+        var specialities = JsonSerializer.Deserialize<List<SpecialityDTO>>(strJson, //deserializa json 
+            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }) ?? [];   //problemas con cammel case en atributos del json
 
-            _specialities = [.. specialities.Select(s => new Speciality(s.Id, s.Name, s.Description))]; //crea entidades y las almacena en _speciality mendiante linq
+        _specialities = [.. specialities.Select(s => new Speciality(s.Id, s.Name, s.Description))]; //crea entidades y las almacena en _speciality mendiante linq
 
 
         }
