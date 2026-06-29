@@ -6,7 +6,7 @@ using DSW2026EJ15.Domain.Entities;
 using DSW2025EJ15.Data.Dtos;
 using DSW2026EJ15.Domain.Interfaces;
 
-namespace DSW2026EJ15.Data.Sources;
+namespace DSW2025EJ15.Data.Sources.Persistences;
 public class PersistenceInMemory :IPersistence 
 {
     private List<Speciality> _specialities = [];

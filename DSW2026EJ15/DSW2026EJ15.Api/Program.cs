@@ -1,23 +1,32 @@
-using DSW2026EJ15.Data.Sources;
 using DSW2026EJ15.Domain.Interfaces;
 using DSW2026EJ15.Domain.Exceptions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using DSW2026EJ15.Api.Middleware;
+using DSW2025EJ15.Data.Sources.Persistences;
+using DSW2025EJ15.Data.Sources;
+using Microsoft.EntityFrameworkCore;
 
 namespace DSW2026EJ15.Api;
 public class Program
 {
     public static void Main(string[] args)
     {
-        
-        
+
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        
+
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen();
         builder.Services.AddSingleton<IPersistence, PersistenceInMemory>();
+
+        //DB
+        //trae de la configuracion del builder las intrucciones en DefaultConnection 
+        var connectionstring = builder.Configuration.GetConnectionString("DefaultConnection"); 
+        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionstring));
+
+
         builder.Services.AddHealthChecks();
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
