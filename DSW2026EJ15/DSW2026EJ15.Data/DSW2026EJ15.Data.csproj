@@ -15,4 +15,8 @@
     <ProjectReference Include="..\DSW2026EJ15.Domain\DSW2026EJ15.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interface\" />
+  </ItemGroup>
+
 </Project>

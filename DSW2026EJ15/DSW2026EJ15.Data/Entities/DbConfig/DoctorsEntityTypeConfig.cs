@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DSW2025EJ15.Data.Sources.DbConfig
+namespace DSW2025EJ15.Data.Entities.DbConfig
 {
     public class DoctorsEntityTypeConfig : IEntityTypeConfiguration<Doctor> 
     {

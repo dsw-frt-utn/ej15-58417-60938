@@ -2,9 +2,9 @@ using DSW2026EJ15.Domain.Interfaces;
 using DSW2026EJ15.Domain.Exceptions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using DSW2026EJ15.Api.Middleware;
-using DSW2025EJ15.Data.Sources.Persistences;
 using Microsoft.EntityFrameworkCore;
 using DSW2025EJ15.Data.Entities;
+using DSW2025EJ15.Data.Entities.Persistences;
 
 namespace DSW2026EJ15.Api;
 public class Program

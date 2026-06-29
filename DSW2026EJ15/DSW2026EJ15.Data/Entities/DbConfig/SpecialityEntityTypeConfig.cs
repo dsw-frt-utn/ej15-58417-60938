@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DSW2025EJ15.Data.Sources.DbConfig
+namespace DSW2025EJ15.Data.Entities.DbConfig
 {
     public class SpecialityEntityTypeConfig : IEntityTypeConfiguration<Speciality>
     {
@@ -14,6 +14,7 @@ namespace DSW2025EJ15.Data.Sources.DbConfig
         public void Configure(EntityTypeBuilder<Speciality> builder)
         {
             //crea la tabla de speciality en la bd unicamente
+            // no cre
         }
     }
 }
