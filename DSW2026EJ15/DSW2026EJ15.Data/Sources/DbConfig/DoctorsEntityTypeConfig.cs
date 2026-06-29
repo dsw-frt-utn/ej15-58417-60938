@@ -13,10 +13,17 @@ namespace DSW2025EJ15.Data.Sources.DbConfig
 
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
-            builder.HasKey(d => d.Id);
-            builder.Property(d=>d.Id).IsRequired();
             
+            builder.HasOne(d => d.Specialty).WithMany().HasForeignKey(d =>d.Specialty.Id);
+
+            //un doctor tiene una especialidad HasOne
+            //With many va vacio porque es una relacion unidireccional
+            //HasForeignkey le indica cual es la clave pricipal de especialidad 
+            //esto es lo unico que configuro porque lo demas lo configura entityframework por defecto
         }
+
+
+    }
     }
  }
 
