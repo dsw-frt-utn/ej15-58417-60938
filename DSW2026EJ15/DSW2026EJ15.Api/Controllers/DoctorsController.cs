@@ -50,8 +50,8 @@ namespace DSW2026EJ15.Api.Controllers
                 newDoctor.Specialty.Name
             );
 
-            return Created();
-            
+            return Created($"api/doctors/{newDoctor.Id}", response);
+
         }
 
         [HttpGet]
@@ -74,13 +74,11 @@ namespace DSW2026EJ15.Api.Controllers
         public IActionResult GetDoctorById(Guid id)
         {
             Doctor? doctor = _persistence.GetActiveDoctorById(id);
-            
-                if (doctor == null)
-                {
-                    throw new ValidationException("Medico inexistente o inactivo");
-                }
-            
-            
+
+            if (doctor == null)
+            {
+                return NotFound("No se encontró el médico o no está activo.");
+            }
 
             DoctorModel.Response response = new DoctorModel.Response(
                 doctor.Id,
@@ -96,15 +94,16 @@ namespace DSW2026EJ15.Api.Controllers
         public IActionResult DeleteDoctor(Guid id)
         {
             Doctor? doctor = _persistence.GetActiveDoctorById(id);
-            
-                if (doctor == null)
-                {
-                    throw new ValidationException("Doctor no encontrado o inactivo");
-                }
-                
+
+            if (doctor == null)
+            {
+                return NotFound("No se encontró el médico o no está activo.");
+            }
+
             _persistence.DeactivateDoctor(id);
 
             return NoContent();
         }
+
     }
 }
